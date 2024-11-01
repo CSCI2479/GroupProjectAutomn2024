@@ -7,9 +7,10 @@
   </head>
   <body>
     <div class="header">
-    @include('home.header')
+    @include('header')
     </div>
 
+    
 
   </body>
 </html>
