@@ -9,7 +9,7 @@
     <div class="header">
     @include('header')
     </div>
-    <div class="dropdown">
+      <div class="dropdown">
   <div id="myDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
     <a href="#Home">Aspirin</a>
@@ -27,6 +27,8 @@
   .dropdown {
        position: relative;
        display: inline-block;
+       top: 50px;
+       left: 30px;
     }
 
   .dropdown-content {
@@ -50,7 +52,7 @@
 
    #myInput {
        box-sizing: border-box;
-       background-image: url('search-512.webp');
+       background-image: url('icons8-search.pdf');
        background-position: 14px 12px;
        background-repeat: no-repeat;
        font-size: 16px;
@@ -84,9 +86,9 @@
            for (i = 0; i < a.length; i++) {
               txtValue = a[i].textContent || a[i].innerText;
            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              a[i].style.display = "";
+              a[i].style.display = "none";
     } else {
-        a[i].style.display = "none";
+        a[i].style.display = "";
     }
   }
 } 
