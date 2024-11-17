@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Mart</title>
-  </head>
-  <body>
-    <div class="header">
-    @include('header')
-    </div>
-      <div class="dropdown">
+<div class="dropdown">
   <div id="myDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
     <a href="#Home">Aspirin</a>
@@ -93,11 +82,4 @@
   }
 } 
   
-    </script>
-</body>
-</html>
-
-    
-
-  </body>
-</html>
+</script>

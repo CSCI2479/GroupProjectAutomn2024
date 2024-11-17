@@ -3,99 +3,69 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Cart;
 use App\Models\Product;
+
+use Auth;
+
 
 class CartController extends Controller
 {
 
-    // show the cart page with the products
-    public function index()
+    public function add_cart(Request $request, $id)
     {
-        $cart = session()->get('cart', []);
-        return view('products.cart', compact('cart'));
-    }
+        if(Auth::id()){
+            $product = Product::find($id);
+            $cart_name = $product->name;
+            $cart_description = $product->description; 
+            $cart_price = $product->price;
+            $cart_image = $product->image;
 
+            $data = new Cart;
+            $data->name = $cart_name;
+            $data->description = $cart_description;
+            $data->price = $cart_price * $request->qty;
+            $data->image = $cart_image;
+            $data->quantity = $request->qty;
+            $data->userid = Auth()->user()?->id;
 
-    // this will add the products to cart
-    public function addToCart(Request $request, $productId)
-    {
-        $product = Product::find($productId);
-        $cart = session()->get('cart', []);
+            $data->save();
+            return redirect()->back();
 
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity']++;
-        } else {
-            $cart[$productId] = [
-                "name" => $product->name,
-                "quantity" => 1,
-                "price" => $product->price,
-                "image" => $product->image
-            ];
+        } else{
+            return redirect("/login");
         }
 
-        session()->put('cart', $cart);
-        return response()->json(['totalItems' => array_sum(array_column($cart, 'quantity'))]);
     }
 
+    public function my_cart(){
+        $user_id = Auth()->user()?->id;
 
-    // will update the price and quantity with total
-    public function update(Request $request)
-    {
-        $productId = $request->product_id;
-        $quantity = $request->quantity;
+        $data = Cart::where('userid', "=", $user_id)->get();
+        $count = Cart::where('userid',$user_id)->count();
 
-        // Assume the cart is stored in the session
-        $cart = session('cart', []);
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity'] = $quantity;
-            session(['cart' => $cart]);
-
-            $newSubtotal = $cart[$productId]['price'] * $quantity;
-            return response()->json([
-                'success' => true,
-                'newSubtotal' => $newSubtotal,
-                'message' => 'Cart updated'
-            ]);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Product not found in cart']);
+        return view('partials/cart', compact('data', 'count'));
     }
 
-    // remove product from cart
-    public function remove(Request $request)
-    {
-        $cart = session()->get('cart', []);
-        $productId = $request->product_id;
-
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]); // Remove the item
-            session()->put('cart', $cart); // Update the session
-            $total = array_sum(array_column($cart, 'quantity', 'price')); // Recalculate total
-
-            return response()->json([
-                'success' => true,
-                'total' => $total
-            ]);
-        }
-
-        return response()->json(['success' => false]);
+    public function remove_cart($id){
+        $data = Cart::find($id);
+        $data->delete();
+        return redirect()->back();
     }
 
+    // public function increase_cart_quantity($rowId){
+    //    $data = Cart::get($rowId);
+    //    $quantity = $data->quantity + 1;
 
-    // get totals for the cart and show it there down in the page
-    public function getTotals()
-    {
-        $cart = session()->get('cart', []);
-        $subtotal = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['quantity'];
-        }, $cart));
-        $total = $subtotal;
+    //    Cart::update($rowId, $quantity);
+    // }
 
-        return response()->json([
-            'subtotal' => $subtotal,
-            'total' => $total
-        ]);
-    }
-
-
+    // public function decrease_cart_quantity($rowId){
+    //     $data = Cart::get($rowId);
+    //     $quantity = $data->quantity - 1;
+ 
+    //     Cart::update($rowId, $quantity);
+    // }
+    
 }
