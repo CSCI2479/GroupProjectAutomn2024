@@ -34,14 +34,19 @@ class ProductController extends Controller
         return view('partials/product_details', compact('productDetail', 'count'));
     }
 
-    public function product_search(Request $request){
-        $search = $request->search;
-        $products = Product::where('name', 'LIKE', '%'.$search.'%')->get();
-
-        $user_id = Auth()->user()?->id;
-        $count = Cart::where('userid',$user_id)->count();
-
-        return view('partials/products', compact('products', 'count'));
+    public function product_search(Request $request) {
+        $search = $request->input('search');
+        
+        if (empty($search)) {
+            
+            return redirect()->route('products');
+        }
+        
+        $products = Product::where('name', 'LIKE', '%' . $search . '%')->get();
+        $user_id = auth()->user()?->id;
+        $count = Cart::where('userid', $user_id)->count();
+    
+        return view('partials.products', compact('products', 'count'));
     }
 
     public function addToCart(Request $req){

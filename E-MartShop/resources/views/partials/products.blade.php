@@ -44,7 +44,7 @@ button.btn{
 <h3 class="text-center"> Our Products </h3>
 
 <div class="search-bar"> 
-              <form class="text-center" action="{{url('/product_search')}}">
+              <form class="text-center" action="{{ route('product_search') }}" method="GET" novalidate>
                 @csrf
                 <input type="text" name="search" id="search" style="width:400;" placeholder="Search For Products"
                     required />
