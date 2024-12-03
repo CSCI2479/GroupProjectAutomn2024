@@ -42,7 +42,7 @@ class ProductController extends Controller
             return redirect()->route('products');
         }
         
-        $products = Product::where('name', 'LIKE', '%' . $search . '%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $search . '%')->paginate(9);
         $user_id = auth()->user()?->id;
         $count = Cart::where('userid', $user_id)->count();
     
