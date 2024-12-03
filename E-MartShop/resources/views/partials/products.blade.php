@@ -29,7 +29,13 @@ div.card.my-auto{
 button.btn{
     margin: .3em;
 }
-
+.products{
+    margin-left: 675px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-style: italic;
+}
 </style> 
 
 </head>
@@ -100,7 +106,9 @@ button.btn{
 
 
 </div>
-
+<div class="products">
+    {{ $products->links() }}
+</div>
 
 
 
