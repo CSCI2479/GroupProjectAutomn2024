@@ -174,14 +174,14 @@ ul.list-unstyled{
                <a href="/categories" class="all-categories text-white"> Our Categories </a>
               @if (Route::has('login'))
           </div>
-
-              <!-- <div class="col-md-4 display-flex margin"> 
+    
+         <!--  <div class="col-md-4 display-flex margin"> 
               <form class="header_search-box" action="{{url('product_search')}}">
                 <input type="text" name="search" id="search" placeholder="Search For Products"
                     required />
                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
                 </button>
-            </form>
+            </form> 
             </div> -->
             <div class="col-md-1 icon wishlist-icon margin">
                 <a href="#!"> <i class="fa fa-heart text-light" style="font-size:20px"></i>
