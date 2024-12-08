@@ -19,13 +19,6 @@ class OrderController extends Controller
         $userid = Auth()->user()?->id;
         $cart = Cart::where('userid', $userid)->get();
 
-        // code for post method
-        //$order = Order::find($request->order_id);
-        //$order->status = 'confirmed';
-        //$order->save();
-    
-
-
         foreach($cart as $carts){
             $order = new Order;
             $order->name = $name;
@@ -37,6 +30,5 @@ class OrderController extends Controller
             return redirect()->back();
         }
         
-        //return redirect()->route('order_success'); // Redirect to a success page after confirmation
     }
 }

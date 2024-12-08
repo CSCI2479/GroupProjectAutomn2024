@@ -107,9 +107,10 @@ $total_price = 0;
             <h5 class="mb-0 text-center">Summary</h5>
           </div>
           <div class="card-body">
-
-      <form class="mt-4" method="POST" action="{{url('/confirm_order')}}">
-        @csrf
+<!-- addting correct route for checkout below -->
+<form class="mt-4" method="POST" action="{{ route('confirm_order') }}">
+    @csrf
+<!-- end of change -->
       <div data-mdb-input-init class="form-outline form-white mb-4">
       <label class="form-label" for="typeName">Name</label>
         <input type="text" id="typeName" class="form-control form-control-lg" size="25" name="name" />
