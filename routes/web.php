@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CheckoutController;
 
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
@@ -19,6 +20,10 @@ Route::get('product_details/{slug}', [ProductController::class, 'product_details
 Route::get('/product_search', [ProductController::class, 'product_search'])->name('product_search');
 
 Route::get("/remove_cart/{id}", [CartController::class, 'remove_cart']);
+
+//Lane's defined route for order page
+Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout');
+
 
 //Increase + Decrease Quantity
 // Route::put('increase_cart_quantity{id}', [CartController::class, 'increase_cart_quantity'])->name('increase.quantity');
